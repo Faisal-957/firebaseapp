@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:widgets_practicing/Api/weatherapp.dart';
+import 'package:widgets_practicing/authscreen/homescreen.dart';
+import 'package:widgets_practicing/noteapp/add.screen.dart';
+import 'package:widgets_practicing/noteapp/noteapp.dart';
 
 class Appbarscreen extends StatefulWidget {
   const Appbarscreen({super.key});
@@ -8,29 +12,24 @@ class Appbarscreen extends StatefulWidget {
 }
 
 class _AppbarscreenState extends State<Appbarscreen> {
-  final List<String> name = [
-    "faisal",
-    "khan ",
-    "wahab",
-    "zakir"
-        "faisal",
-    "khan ",
-    "wahab",
-    "zakir"
-        "faisal",
-    "khan ",
-    "wahab",
-    "zakir",
+  final List<Widget> screens = [
+    const HomeScreen(),
+    const Notehome(),
+    const WeatherScreen(),
   ];
+
   int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('My App'),
-        backgroundColor: Colors.blue,
+        title: const Text(
+          'SAVO ',
+          style: TextStyle(color: Colors.green, fontSize: 30),
+        ),
+        backgroundColor: Colors.white,
         centerTitle: true,
         leading: Icon(Icons.menu),
         actions: [
@@ -48,51 +47,15 @@ class _AppbarscreenState extends State<Appbarscreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-
-              itemCount: name.length,
-              itemBuilder: (context, index) {
-                return SizedBox(
-                  height: 100,
-                  width: 200,
-                  child: Card(
-                    child: ListTile(
-                      leading: Icon(Icons.person),
-
-                      title: Text(name[index]),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              itemCount: 8,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(color: Colors.green),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+      body: screens[selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 40,
+        backgroundColor: Colors.white,
         currentIndex: selectedIndex,
-        selectedItemColor: Colors.white,
+        selectedItemColor: Colors.green,
         unselectedItemColor: Colors.black54,
-        backgroundColor: Colors.blue,
+
         onTap: (index) {
           setState(() {
             selectedIndex = index;
@@ -101,8 +64,11 @@ class _AppbarscreenState extends State<Appbarscreen> {
 
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.note_add),
+            label: 'Add Note',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.cloud), label: 'Weather'),
         ],
       ),
     );

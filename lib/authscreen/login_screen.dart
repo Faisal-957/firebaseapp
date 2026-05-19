@@ -20,7 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController logincontroller = TextEditingController();
   final TextEditingController passcontroller = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  bool isvisible = false;
 
+  ////////////////////////////logggin function////////////////////////////////////////////
   void login() async {
     try {
       await auth.signInWithEmailAndPassword(
@@ -42,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  /////////////google signin funtion//////////////////////////////////////////////
   void signinwithgoogel() async {
     String clintid =
         "473791988007-kplhm1sqve3923qgeeik30v59m75kb1r.apps.googleusercontent.com";
@@ -93,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               30.verticalSpace,
-
+              ///////////for email////////////////
               TextFormField(
                 controller: logincontroller,
                 decoration: InputDecoration(
@@ -103,10 +106,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               20.verticalSpace,
+              ///////////for password////////////////
               TextFormField(
+                obscureText: isvisible,
                 controller: passcontroller,
                 decoration: InputDecoration(
                   hintText: "Password",
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isvisible = !isvisible;
+                      });
+                    },
+                    icon: Icon(Icons.remove_red_eye),
+                  ),
+
                   prefixIcon: Icon(Icons.lock),
                   label: Text("Password"),
                 ),

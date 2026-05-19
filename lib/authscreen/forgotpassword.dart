@@ -65,7 +65,7 @@ class _ForgotpassState extends State<Forgotpass> {
                 ),
               ),
               30.verticalSpace,
-              Button(title: "Send OTP", onpressed: forgotpass),
+              Button(title: "Reset", onpressed: forgotpass),
             ],
           ),
         ),

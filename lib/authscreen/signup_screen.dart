@@ -18,6 +18,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  bool isVisible = false;
   Future<void> singup() async {
     try {
       await auth.createUserWithEmailAndPassword(
@@ -64,6 +65,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               30.verticalSpace,
 
+              ///////////name ////////////////
               TextFormField(
                 controller: usernamecontroller,
                 decoration: InputDecoration(
@@ -73,6 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               20.verticalSpace,
+              ///////////for email////////////////
               TextFormField(
                 controller: emailcontroller,
 
@@ -83,10 +86,20 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               20.verticalSpace,
+              ///////////password////////////////
               TextFormField(
+                obscureText: isVisible,
                 controller: passwordcontroller,
 
                 decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isVisible = !isVisible;
+                      });
+                    },
+                    icon: Icon(Icons.remove_red_eye),
+                  ),
                   hintText: "Password",
                   prefixIcon: Icon(Icons.lock),
                   label: Text("Password"),
@@ -97,6 +110,8 @@ class _SignupScreenState extends State<SignupScreen> {
               20.verticalSpace,
               Text('Connect With', style: TextStyle(fontSize: 20)),
               20.verticalSpace,
+
+              /////////////// google button /////////////
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -105,6 +120,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
                     child: Image.asset("assets/images/image.png", scale: 3),
                   ),
+
+                  ///////// facebook button///////////////
                   20.horizontalSpace,
                   Image.asset("assets/images/image6.png", scale: 3),
                 ],
