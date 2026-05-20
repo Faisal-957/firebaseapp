@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherScreen extends StatefulWidget {
@@ -49,47 +50,57 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Weather App"), centerTitle: true),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
 
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
 
-        child: Column(
-          children: [
-            DropdownButtonFormField<String>(
-              initialValue: selectedCity,
-              decoration: InputDecoration(border: OutlineInputBorder()),
-              items: cities.map((city) {
-                return DropdownMenuItem(value: city, child: Text(city));
-              }).toList(),
+          child: Column(
+            children: [
+              Text(
+                "Weather App",
+                style: TextStyle(fontSize: 40, color: Colors.black),
+              ),
+              30.verticalSpace,
+              DropdownButtonFormField<String>(
+                initialValue: selectedCity,
+                decoration: InputDecoration(border: OutlineInputBorder()),
+                items: cities.map((city) {
+                  return DropdownMenuItem(value: city, child: Text(city));
+                }).toList(),
 
-              onChanged: (newValue) {
-                setState(() {
-                  selectedCity = newValue!;
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedCity = newValue!;
+                    getWeather(selectedCity);
+                  });
+                },
+              ),
+
+              SizedBox(height: 20),
+
+              ElevatedButton(
+                onPressed: () {
                   getWeather(selectedCity);
-                });
-              },
-            ),
+                },
+                child: const Text("Get Weather"),
+              ),
 
-            SizedBox(height: 20),
+              const SizedBox(height: 30),
 
-            ElevatedButton(
-              onPressed: () {
-                getWeather(selectedCity);
-              },
-              child: const Text("Get Weather"),
-            ),
+              Text(
+                cityName,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
 
-            const SizedBox(height: 30),
-
-            Text(
-              cityName,
-              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-
-            Text("$temperature °C", style: const TextStyle(fontSize: 40)),
-          ],
+              Text("$temperature °C", style: const TextStyle(fontSize: 40)),
+            ],
+          ),
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:widgets_practicing/authscreen/login_screen.dart';
 
 class Forgotpass extends StatefulWidget {
   const Forgotpass({super.key});
@@ -13,8 +12,12 @@ class Forgotpass extends StatefulWidget {
 class _ForgotpassState extends State<Forgotpass> {
   final TextEditingController forgotcontroller = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
+  bool isloading = false;
   void forgotpass() async {
     try {
+      setState(() {
+        isloading = true;
+      });
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: forgotcontroller.text.trim(),
       );
@@ -27,6 +30,9 @@ class _ForgotpassState extends State<Forgotpass> {
         context,
       ).showSnackBar(SnackBar(content: Text(e.message ?? "Error")));
     }
+    setState(() {
+      isloading = false;
+    });
   }
 
   @override
@@ -65,7 +71,24 @@ class _ForgotpassState extends State<Forgotpass> {
                 ),
               ),
               30.verticalSpace,
-              Button(title: "Reset", onpressed: forgotpass),
+
+              SizedBox(
+                height: 50.h,
+                width: 200.w,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff02C778),
+                  ),
+
+                  onPressed: isloading ? null : forgotpass,
+                  child: isloading
+                      ? CircularProgressIndicator()
+                      : Text(
+                          "Reset Passsword",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                ),
+              ),
             ],
           ),
         ),

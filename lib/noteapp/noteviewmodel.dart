@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:widgets_practicing/noteapp/models.dart';
-
 class NotepadViewmodel extends ChangeNotifier {
   final TextEditingController titlecontroller = TextEditingController();
   final TextEditingController descriptioncontroller = TextEditingController();
@@ -20,7 +18,7 @@ class NotepadViewmodel extends ChangeNotifier {
       'title': titlecontroller.text,
       'description': descriptioncontroller.text,
 
-      'time': FieldValue.serverTimestamp(),
+      // 'time': FieldValue.serverTimestamp(),
     });
 
     titlecontroller.clear();

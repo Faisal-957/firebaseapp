@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:widgets_practicing/appbarscreen.dart';
 import 'package:widgets_practicing/authscreen/forgotpassword.dart';
 import 'package:widgets_practicing/authscreen/homescreen.dart';
 import 'package:widgets_practicing/authscreen/signup_screen.dart';
@@ -21,15 +22,20 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passcontroller = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   bool isvisible = false;
+  bool isloading = false;
 
   ////////////////////////////logggin function////////////////////////////////////////////
   void login() async {
+    setState(() {
+      isloading = true;
+    });
     try {
       await auth.signInWithEmailAndPassword(
         email: logincontroller.text.trim(),
         password: passcontroller.text.trim(),
       );
-      Get.to(HomeScreen());
+
+      Get.to(Appbarscreen());
 
       ScaffoldMessenger.of(
         context,
@@ -41,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.red,
         ),
       );
+      isloading = false;
     }
   }
 
@@ -58,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
         idToken: googleAuth.idToken,
       );
       await auth.signInWithCredential(creadential);
-      Get.to(HomeScreen());
+      Get.to(Appbarscreen());
     } catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -135,7 +142,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               20.verticalSpace,
-              Button(title: "Log In", onpressed: login),
+              Button(
+                title: "Log In",
+                onpressed: isloading ? null : login,
+                child: isloading
+                    ? CircularProgressIndicator()
+                    : Text(
+                        "Log In",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+              ),
               10.verticalSpace,
               Button(
                 title: " Create an Account",
@@ -170,9 +186,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
 class Button extends StatelessWidget {
   final String title;
-  final VoidCallback onpressed;
+  final Widget? child;
+  final VoidCallback? onpressed;
 
-  const Button({super.key, required this.title, required this.onpressed});
+  const Button({
+    super.key,
+    required this.title,
+    required this.onpressed,
+    this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -191,14 +213,16 @@ class Button extends StatelessWidget {
           ),
         ),
         child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
+          child:
+              child ??
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
         ),
       ),
     );

@@ -32,71 +32,73 @@ class Notehome extends StatelessWidget {
           centerTitle: true,
         ),
 
-        body: StreamBuilder<QuerySnapshot>(
-          stream: value.notesRef.orderBy('time', descending: true).snapshots(),
+        body: SafeArea(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: value.notesRef.snapshots(),
 
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-            final docs = snapshot.data!.docs;
+              final docs = snapshot.data!.docs;
 
-            return ListView.builder(
-              itemCount: docs.length,
+              return ListView.builder(
+                itemCount: docs.length,
 
-              itemBuilder: (context, index) {
-                final doc = docs[index];
+                itemBuilder: (context, index) {
+                  final doc = docs[index];
 
-                return Card(
-                  margin: const EdgeInsets.all(8),
+                  return Card(
+                    margin: const EdgeInsets.all(8),
 
-                  child: ListTile(
-                    tileColor: Colors.white,
+                    child: ListTile(
+                      tileColor: Colors.white,
 
-                    // TITLE
-                    title: Text(
-                      doc['title'],
+                      // TITLE
+                      title: Text(
+                        doc['title'],
 
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      subtitle: Text(
+                        doc['description'],
+
+                        style: const TextStyle(fontSize: 18),
+                      ),
+
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.black),
+
+                            onPressed: () {
+                              value.deleteNote(doc.id);
+                            },
+                          ),
+
+                          IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.black),
+
+                            onPressed: () {
+                              value.editNote(doc);
+                              Get.to(NotepadScreen());
+                            },
+                          ),
+                        ],
                       ),
                     ),
-
-                    subtitle: Text(
-                      doc['description'],
-
-                      style: const TextStyle(fontSize: 18),
-                    ),
-
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.black),
-
-                          onPressed: () {
-                            value.deleteNote(doc.id);
-                          },
-                        ),
-
-                        IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.black),
-
-                          onPressed: () {
-                            value.editNote(doc);
-                            Get.to(NotepadScreen());
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
+                  );
+                },
+              );
+            },
+          ),
         ),
 
         floatingActionButton: FloatingActionButton(

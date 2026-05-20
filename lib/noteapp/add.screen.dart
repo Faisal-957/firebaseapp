@@ -34,44 +34,46 @@ class NotepadScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextFormField(
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                controller: value.titlecontroller,
-                decoration: const InputDecoration(
-                  fillColor: Colors.white,
-                  hintText: "Title",
-                  hintStyle: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  controller: value.titlecontroller,
+                  decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    hintText: "Title",
+                    hintStyle: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
 
-                  filled: true,
-                ),
-              ),
-
-              TextFormField(
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-                controller: value.descriptioncontroller,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  hintText: "Description.......",
-                  hintStyle: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black45,
+                    filled: true,
                   ),
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
-                  filled: true,
                 ),
-              ),
-            ],
+
+                TextFormField(
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                  controller: value.descriptioncontroller,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    hintText: "Description.......",
+                    hintStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black45,
+                    ),
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    filled: true,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

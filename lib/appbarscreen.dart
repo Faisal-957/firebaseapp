@@ -3,6 +3,7 @@ import 'package:widgets_practicing/Api/weatherapp.dart';
 import 'package:widgets_practicing/authscreen/homescreen.dart';
 import 'package:widgets_practicing/noteapp/add.screen.dart';
 import 'package:widgets_practicing/noteapp/noteapp.dart';
+import 'package:widgets_practicing/student_data.dart/student.dart';
 
 class Appbarscreen extends StatefulWidget {
   const Appbarscreen({super.key});
@@ -16,6 +17,7 @@ class _AppbarscreenState extends State<Appbarscreen> {
     const HomeScreen(),
     const Notehome(),
     const WeatherScreen(),
+    const StudentScreen(),
   ];
 
   int selectedIndex = 0;
@@ -69,6 +71,10 @@ class _AppbarscreenState extends State<Appbarscreen> {
             label: 'Add Note',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.cloud), label: 'Weather'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_a_photo),
+            label: 'Student Records',
+          ),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,16 +22,26 @@ class _SignupScreenState extends State<SignupScreen> {
   bool isVisible = false;
   Future<void> singup() async {
     try {
-      await auth.createUserWithEmailAndPassword(
+      final UserCredential userCredential =
+          await auth.createUserWithEmailAndPassword(
         email: emailcontroller.text.trim(),
         password: passwordcontroller.text.trim(),
       );
 
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'username': usernamecontroller.text.trim(),
+        'email': emailcontroller.text.trim(),
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
       Get.to(HomeScreen());
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(e.message ?? "Signup Failed")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message ?? "Signup Failed")),
+      );
     }
   }
 

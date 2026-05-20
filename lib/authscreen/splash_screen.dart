@@ -22,10 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
       final user = FirebaseAuth.instance.currentUser;
 
       if (user != null) {
-        // user is logged in
         Get.offAll(() => Appbarscreen());
       } else {
-        // user is NOT logged in
         Get.offAll(() => LoginScreen());
       }
     });

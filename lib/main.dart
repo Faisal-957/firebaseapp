@@ -4,12 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:widgets_practicing/appbarscreen.dart';
+import 'package:widgets_practicing/student_data.dart/student.dart';
 
-import 'package:widgets_practicing/authscreen/forgotpassword.dart';
-import 'package:widgets_practicing/authscreen/homescreen.dart';
-import 'package:widgets_practicing/authscreen/login_screen.dart';
-import 'package:widgets_practicing/noteapp/add.screen.dart';
-import 'package:widgets_practicing/noteapp/models.dart';
 import 'package:widgets_practicing/authscreen/splash_screen.dart';
 
 import 'package:widgets_practicing/firebase_options.dart';
@@ -37,7 +33,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
+          home: Appbarscreen(),
         );
       },
     );
