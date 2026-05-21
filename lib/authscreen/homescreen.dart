@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:get/utils.dart';
 import 'package:widgets_practicing/authscreen/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Center(
             child: TextButton(
               onPressed: () {
-                ;
                 showDialog(
                   context: context,
                   builder: (context) {

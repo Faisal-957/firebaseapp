@@ -7,7 +7,6 @@ import 'package:get/route_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:widgets_practicing/appbarscreen.dart';
 import 'package:widgets_practicing/authscreen/forgotpassword.dart';
-import 'package:widgets_practicing/authscreen/homescreen.dart';
 import 'package:widgets_practicing/authscreen/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {

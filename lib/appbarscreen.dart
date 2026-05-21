@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgets_practicing/Api/weatherapp.dart';
 import 'package:widgets_practicing/authscreen/homescreen.dart';
-import 'package:widgets_practicing/noteapp/add.screen.dart';
 import 'package:widgets_practicing/noteapp/noteapp.dart';
 import 'package:widgets_practicing/student_data.dart/student.dart';
 
