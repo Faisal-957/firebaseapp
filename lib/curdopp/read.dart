@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:widgets_practicing/curdopp/creat.dart';
 import 'package:widgets_practicing/curdopp/db_services.dart';
 
 class Readscreen extends StatelessWidget {
@@ -17,6 +18,16 @@ class Readscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Curdop()),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+
       body: StreamBuilder(
         stream: DbServices().readData(),
         builder: (context, snapshot) {
@@ -33,29 +44,25 @@ class Readscreen extends StatelessWidget {
                 String Age = map["Age"].toString();
                 String Address = map["Address"].toString();
                 return Card(
+                  color: Colors.grey[100],
                   child: ListTile(
-                    leading: Column(
+                    title: Text(Name),
+                    subtitle: Text("Age: $Age, Address: $Address"),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          Name,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        IconButton(
+                          onPressed: () {
+                            DbServices().deleteData(id);
+                          },
+                          icon: Icon(Icons.delete),
                         ),
-                        Text(
-                          Age,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          Address,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        IconButton(
+                          onPressed: () {
+                            _showUpdateDialog(context, id, Name, Age, Address);
+                          },
+
+                          icon: Icon(Icons.edit),
                         ),
                       ],
                     ),
@@ -70,4 +77,62 @@ class Readscreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showUpdateDialog(
+  BuildContext context,
+  String id,
+  String name,
+  String age,
+  String address,
+) {
+  TextEditingController nameController = TextEditingController(text: name);
+  TextEditingController ageController = TextEditingController(text: age);
+  TextEditingController addressController = TextEditingController(
+    text: address,
+  );
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Update Data'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Name'),
+            ),
+            TextField(
+              controller: ageController,
+              decoration: InputDecoration(labelText: 'Age'),
+            ),
+            TextField(
+              controller: addressController,
+              decoration: InputDecoration(labelText: 'Address'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context), // Cancel
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              DbServices().updateData(
+                id,
+                nameController.text,
+                ageController.text,
+                addressController.text,
+              );
+              Navigator.pop(context);
+            },
+            child: Text('Update'),
+          ),
+        ],
+      );
+    },
+  );
 }

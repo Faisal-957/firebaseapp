@@ -17,6 +17,16 @@ class DbServices {
   }
 
   //-----update-------//
+  Future<void> updateData(String id, String name, String age, String address) {
+    return firestore.doc(id).update({
+      'Name': name,
+      'Age': age,
+      'Address': address,
+    });
+  }
 
   //-----delet-------//
+  Future<void> deleteData(String id) {
+    return firestore.doc(id).delete();
+  }
 }

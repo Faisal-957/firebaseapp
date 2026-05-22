@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:widgets_practicing/curdopp/db_services.dart';
+import 'package:widgets_practicing/curdopp/read.dart';
 
 class Curdop extends StatelessWidget {
   const Curdop({super.key});
@@ -13,9 +16,18 @@ class Curdop extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 30),
         child: Column(
           children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                onPressed: () {
+                  Get.to(Readscreen());
+                },
+                icon: Icon(Icons.arrow_back, size: 30),
+              ),
+            ),
             Text(
               "Curd Operation",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -55,6 +67,10 @@ class Curdop extends StatelessWidget {
             20.verticalSpace,
             ElevatedButton(
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Readscreen()),
+                );
                 DbServices().createData(
                   nameController.text,
                   ageController.text,

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Readscreen(),
+          home: Curdop(),
         );
       },
     );
